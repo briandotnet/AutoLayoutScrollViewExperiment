@@ -31,19 +31,24 @@
 @implementation ViewController
 
 static const CGFloat paddingSize = 5.0f;
+static const CGFloat avatarSize = 60.0f;
 
 - (id)init {
     self = [super init];
     if (self) {
-        // additional setup
+        self.lorem = [[LoremIpsum alloc] init];
     }
     return self;
 }
 
 -(void)loadView {
     [super loadView];
-    self.lorem = [[LoremIpsum alloc] init];
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+
+    self.scrollView = ({
+        UIScrollView *sv = [[UIScrollView alloc] initWithFrame:CGRectZero];
+        sv.alwaysBounceVertical = YES;
+        sv;
+    });
     self.contentContainerView = [[UIView alloc] initWithFrame:CGRectZero];
     self.titleLabel = ({
         UILabel *label = [[UILabel alloc] init];
@@ -77,8 +82,8 @@ static const CGFloat paddingSize = 5.0f;
         } else {
             label.text = [self.lorem sentences:arc4random() % 10 + 10];
         }
-        label.lineBreakMode = NSLineBreakByWordWrapping;
-        label.numberOfLines = 0;
+        label.lineBreakMode = NSLineBreakByWordWrapping | NSLineBreakByTruncatingTail;
+        label.numberOfLines = arc4random() % 20 + 20;
         label;
     });
     self.firstNameLabel = ({
@@ -96,7 +101,6 @@ static const CGFloat paddingSize = 5.0f;
 
     [self.view addSubview:self.scrollView];
     [self.scrollView addSubview:self.contentContainerView];
-//    [self.view addSubview:self.contentContainerView];
     [self.contentContainerView addSubview:self.titleLabel];
     [self.contentContainerView addSubview:self.subtitleLabel];
     [self.contentContainerView addSubview:self.contentViewSectionOne];
@@ -107,8 +111,6 @@ static const CGFloat paddingSize = 5.0f;
     [self.contentViewSectionTwo addSubview:self.lastNameLabel];
     
     [self addConstrains];
-    
-
 }
 
 - (void)viewDidLoad
@@ -134,7 +136,7 @@ static const CGFloat paddingSize = 5.0f;
 - (void)addConstrains {
     NSString *padding = [NSString stringWithFormat:@"%.0f", paddingSize];
     NSString *nagetivePadding = [NSString stringWithFormat:@"-%.0f", paddingSize];
-    NSString *avatarSize = @"60";
+    NSString *avatarSizeString = [NSString stringWithFormat:@"%.0f",avatarSize];
     
     [self.titleLabel alignTopEdgeWithView:self.titleLabel.superview predicate:padding];
     [self.titleLabel alignLeadingEdgeWithView:self.titleLabel.superview predicate:padding];
@@ -155,7 +157,7 @@ static const CGFloat paddingSize = 5.0f;
     [self.contentViewSectionTwo alignLeadingEdgeWithView:self.contentViewSectionTwo.superview predicate:padding];
     [self.contentViewSectionTwo alignTrailingEdgeWithView:self.contentViewSectionTwo.superview predicate:nagetivePadding];
     [self.avatarImageView alignTop:padding leading:padding toView:self.avatarImageView.superview];
-    [self.avatarImageView constrainWidth:avatarSize height:avatarSize];
+    [self.avatarImageView constrainWidth:avatarSizeString height:avatarSizeString];
     [self.firstNameLabel constrainLeadingSpaceToView:self.avatarImageView predicate:padding];
     [self.firstNameLabel alignCenterYWithView:self.firstNameLabel.superview predicate:nil];
     [self.lastNameLabel alignTrailingEdgeWithView:self.lastNameLabel.superview predicate:nagetivePadding];
