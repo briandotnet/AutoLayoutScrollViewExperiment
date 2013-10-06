@@ -83,7 +83,7 @@ static const CGFloat avatarSize = 60.0f;
             label.text = [self.lorem sentences:arc4random() % 10 + 10];
         }
         label.lineBreakMode = NSLineBreakByWordWrapping | NSLineBreakByTruncatingTail;
-        label.numberOfLines = arc4random() % 20 + 20;
+        label.numberOfLines = arc4random() % 20 + 40;
         label;
     });
     self.firstNameLabel = ({
@@ -119,11 +119,13 @@ static const CGFloat avatarSize = 60.0f;
     [UIView colorViewsRandomly:self.view];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {\
+    [super viewWillAppear:animated];
     [UIView logViewRect:self.view level:0];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     [UIView logViewRect:self.view level:0];
 }
 
