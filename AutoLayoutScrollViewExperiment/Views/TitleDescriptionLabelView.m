@@ -58,8 +58,7 @@ static const CGFloat paddingSize = 15.0f;
  * The technique is discussed by the author of FLKAutoLayout Florian Kugler here:
  * http://www.objc.io/issue-3/advanced-auto-layout-toolbox.html#intrinsic_content_size_of_multiline_text
  */
-- (void)layoutSubviews
-{
+- (void)layoutSubviews {
     [super layoutSubviews];
     // set preferredMaxLayoutWidth after [super layoutSubviews] as this is the first time we have the width of the super view.
     self.titleLabel.preferredMaxLayoutWidth = self.titleLabel.frame.size.width;

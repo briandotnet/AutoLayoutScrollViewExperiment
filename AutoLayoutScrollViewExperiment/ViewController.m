@@ -117,8 +117,7 @@ static const CGFloat avatarSize = 60.0f;
     [self addConstrains];
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     [UIView colorViewsRandomly:self.view];
 }
