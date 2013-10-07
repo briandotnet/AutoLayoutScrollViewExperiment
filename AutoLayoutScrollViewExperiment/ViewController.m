@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "UIView+FLKAutoLayout.h"
 #import "Util.h"
+#import "TitleDescriptionLabelView.h"
 
 @interface ViewController ()
 
@@ -23,6 +24,7 @@
 @property (nonatomic, strong) UIImageView *avatarImageView;
 @property (nonatomic, strong) UILabel *firstNameLabel;
 @property (nonatomic, strong) UILabel *lastNameLabel;
+@property (nonatomic, strong) TitleDescriptionLabelView *titleDescrptionLabelView;
 
 @property (nonatomic, strong) LoremIpsum *lorem;
 
@@ -30,7 +32,7 @@
 
 @implementation ViewController
 
-static const CGFloat paddingSize = 5.0f;
+static const CGFloat paddingSize = 15.0f;
 static const CGFloat avatarSize = 60.0f;
 
 - (id)init {
@@ -98,13 +100,15 @@ static const CGFloat avatarSize = 60.0f;
         label.text = [self.lorem words:1];
         label;
     });
-
+    self.titleDescrptionLabelView = [[TitleDescriptionLabelView alloc] init];
+    
     [self.view addSubview:self.scrollView];
     [self.scrollView addSubview:self.contentContainerView];
     [self.contentContainerView addSubview:self.titleLabel];
     [self.contentContainerView addSubview:self.subtitleLabel];
     [self.contentContainerView addSubview:self.contentViewSectionOne];
     [self.contentContainerView addSubview:self.contentViewSectionTwo];
+    [self.contentContainerView addSubview:self.titleDescrptionLabelView];
     [self.contentViewSectionOne addSubview:self.descriptionLabel];
     [self.contentViewSectionTwo addSubview:self.avatarImageView];
     [self.contentViewSectionTwo addSubview:self.firstNameLabel];
@@ -119,7 +123,7 @@ static const CGFloat avatarSize = 60.0f;
     [UIView colorViewsRandomly:self.view];
 }
 
-- (void)viewWillAppear:(BOOL)animated {\
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [UIView logViewRect:self.view level:0];
 }
@@ -129,10 +133,28 @@ static const CGFloat avatarSize = 60.0f;
     [UIView logViewRect:self.view level:0];
 }
 
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    // update content view width 
+    for (NSLayoutConstraint *constrain in self.contentContainerView.constraints) {
+        if (constrain.firstItem == self.contentContainerView && constrain.firstAttribute == NSLayoutAttributeWidth) {
+            constrain.constant = CGRectGetWidth(self.contentContainerView.superview.bounds) - 2 * paddingSize;
+        }
+    }
+    // the prefferedMaxLayoutWidth attribute is depending on the superview width, set it after we update the container width contrain
+    self.descriptionLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.descriptionLabel.superview.bounds) - 2 * paddingSize;
+    self.subtitleLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.descriptionLabel.superview.bounds) - 2 * paddingSize;
+
+    // don't forget to force layout the subviews or else we'll crash
+    [self.view layoutIfNeeded];
+    
+    NSLog(@"viewDidLayoutSubView");
+    [UIView logViewRect:self.view level:0];
+}
+
 - (void)updateViewConstraints {
     [super updateViewConstraints];
-    self.descriptionLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.view.bounds) - 4 * paddingSize;
-    self.subtitleLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.view.bounds) - 2 * paddingSize;
 }
 
 - (void)addConstrains {
@@ -166,14 +188,17 @@ static const CGFloat avatarSize = 60.0f;
     [self.lastNameLabel alignCenterYWithView:self.lastNameLabel.superview predicate:nil];
     [self.contentViewSectionTwo alignBottomEdgeWithView:self.avatarImageView predicate:padding];
     
-    [self.contentContainerView alignTopEdgeWithView:self.contentContainerView.superview predicate:nil];
-    [self.contentContainerView alignLeadingEdgeWithView:self.contentContainerView.superview predicate:nil];
-    [self.contentContainerView alignTrailingEdgeWithView:self.contentContainerView.superview predicate:nil];
-    [self.contentContainerView alignBottomEdgeWithView:self.contentViewSectionTwo predicate:padding];
+    [self.titleDescrptionLabelView constrainTopSpaceToView:self.contentViewSectionTwo predicate:padding];
+    [self.titleDescrptionLabelView alignLeadingEdgeWithView:self.titleDescrptionLabelView.superview predicate:padding];
+    [self.titleDescrptionLabelView alignTrailingEdgeWithView:self.titleDescrptionLabelView.superview predicate:nagetivePadding];
     
-    [self.scrollView alignTop:nil leading:nil bottom:nil trailing:nil toView:self.scrollView.superview];
-    [self.scrollView alignBottomEdgeWithView:self.contentContainerView predicate:nil];
-//    [self.contentContainerView alignTop:padding leading:padding bottom:nagetivePadding trailing:nagetivePadding toView:self.view];
+    [self.contentContainerView alignTopEdgeWithView:self.contentContainerView.superview predicate:padding];
+    [self.contentContainerView alignLeadingEdgeWithView:self.contentContainerView.superview predicate:padding];
+    [self.contentContainerView constrainWidth:nil]; // this one will be updated in view did layout subviews
+    [self.contentContainerView alignBottomEdgeWithView:self.titleDescrptionLabelView predicate:padding];
+    
+    [self.scrollView alignTop:padding leading:padding bottom:nagetivePadding trailing:nagetivePadding toView:self.scrollView.superview];
+    [self.scrollView alignBottomEdgeWithView:self.contentContainerView predicate:padding];
     
 }
 

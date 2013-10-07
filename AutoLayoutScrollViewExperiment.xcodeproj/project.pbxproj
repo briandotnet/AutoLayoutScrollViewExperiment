@@ -28,6 +28,7 @@
 		D12F212617FFE5470022869D /* UIView+FLKAutoLayoutPredicate.m in Sources */ = {isa = PBXBuildFile; fileRef = D12F212317FFE5470022869D /* UIView+FLKAutoLayoutPredicate.m */; };
 		D12F2128180001040022869D /* avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = D12F2127180001040022869D /* avatar.png */; };
 		D12F212A180001720022869D /* avatar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D12F2129180001720022869D /* avatar@2x.png */; };
+		D161515618021084003D192D /* TitleDescriptionLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = D161515518021084003D192D /* TitleDescriptionLabelView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,8 @@
 		D12F212317FFE5470022869D /* UIView+FLKAutoLayoutPredicate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+FLKAutoLayoutPredicate.m"; sourceTree = "<group>"; };
 		D12F2127180001040022869D /* avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar.png; sourceTree = "<group>"; };
 		D12F2129180001720022869D /* avatar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatar@2x.png"; sourceTree = "<group>"; };
+		D161515418021084003D192D /* TitleDescriptionLabelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleDescriptionLabelView.h; sourceTree = "<group>"; };
+		D161515518021084003D192D /* TitleDescriptionLabelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TitleDescriptionLabelView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +134,7 @@
 		D12F20E217FFDD260022869D /* AutoLayoutScrollViewExperiment */ = {
 			isa = PBXGroup;
 			children = (
+				D161515318021048003D192D /* Views */,
 				D12F211D17FFE5470022869D /* FLKAutoLayout */,
 				D12F20EB17FFDD260022869D /* AppDelegate.h */,
 				D12F20EC17FFDD260022869D /* AppDelegate.m */,
@@ -189,6 +193,15 @@
 				D12F212317FFE5470022869D /* UIView+FLKAutoLayoutPredicate.m */,
 			);
 			path = FLKAutoLayout;
+			sourceTree = "<group>";
+		};
+		D161515318021048003D192D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D161515418021084003D192D /* TitleDescriptionLabelView.h */,
+				D161515518021084003D192D /* TitleDescriptionLabelView.m */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -309,6 +322,7 @@
 				D12F212417FFE5470022869D /* FLKAutoLayoutPredicateList.m in Sources */,
 				D12F212517FFE5470022869D /* UIView+FLKAutoLayout.m in Sources */,
 				D12F212617FFE5470022869D /* UIView+FLKAutoLayoutPredicate.m in Sources */,
+				D161515618021084003D192D /* TitleDescriptionLabelView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -483,6 +497,7 @@
 				D12F211617FFDD270022869D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D12F211717FFDD270022869D /* Build configuration list for PBXNativeTarget "AutoLayoutScrollViewExperimentTests" */ = {
 			isa = XCConfigurationList;
@@ -491,6 +506,7 @@
 				D12F211917FFDD270022869D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
